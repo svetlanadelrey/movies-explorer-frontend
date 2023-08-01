@@ -1,0 +1,36 @@
+.login {
+    box-sizing: border-box;
+    min-height: 780px;
+    padding: 56px 30px 30px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.login__container {
+    width: 100%;
+    max-width: 396px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media screen and (min-width: 768px) {
+    .login {
+        min-height: 1024px;
+        padding: 232px 186px;
+    }
+
+    .login__container {
+        align-items: start;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .login {
+        min-height: 700px;
+        padding: 70px 442px;
+    }
+}

@@ -1,0 +1,159 @@
+.about-project {
+    background-color: #FAFAFA;
+    padding: 70px 18px;
+}
+
+.about-project__container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.about-project__title {
+    margin: 0;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.about-project__title::after {
+    content: '';
+    display: block;
+    height: 1px; 
+    background: #000000;
+    margin: 28px auto 0;
+}
+
+.about-project__subtitle {
+    margin: 0;
+    padding-top: 60px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.about-project__text {
+    margin: 0;
+    padding-top: 16px;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.about-project__timetable {
+    display: flex;
+    padding-top: 60px;
+}
+
+.about-project__column_back {
+    flex-basis: 20%;
+}
+
+.about-project__column_front {
+    flex-basis: 80%;
+}
+
+.about-project__timetable-title {
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: normal;
+    min-height: 35px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-project__timetable-title_back {
+    color: #FFFFFF;
+    background: #3456F3;
+}
+
+.about-project__timetable-title_front {
+    background: #F2F2F2;
+}
+
+.about-project__timetable-text {
+    color: #A0A0A0;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .about-project {
+        padding: 90px 50px;
+    }
+
+    .about-project__title {
+        font-size: 22px;
+    }
+
+    .about-project__title::after {
+        margin: 23px auto 0;
+    }
+
+    .about-project__subtitle {
+        font-size: 20px;
+        padding-top: 70px;
+    }
+
+    .about-project__text {
+        font-size: 12px;
+        line-height: 18px;
+        padding-top: 22px;
+    }
+
+    .about-project__text-box {
+        display: flex;
+        column-gap: 30px;
+    }
+
+    .about-project__block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-project__timetable {
+        padding-top: 93px;
+    }
+
+    .about-project__timetable-title {
+        font-size: 14px;
+    }
+
+    .about-project__timetable-text {
+        font-size: 14px;
+        line-height: 17px;
+        padding-top: 14px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .about-project {
+        padding: 110px 70px;
+    }
+
+    .about-project__text {
+        font-size: 14px;
+        line-height: 20px;
+        padding-top: 26px;
+    }
+
+    .about-project__text-box {
+        column-gap: 40px;
+    }
+
+    .about-project__timetable {
+        padding-top: 110px;
+    }
+}

@@ -1,0 +1,44 @@
+.login-menu__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
+}
+
+.login-menu__link {
+    color: #000000;
+    text-decoration: none;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.login-menu__link_signin {
+    color: #FFFFFF;
+    background-color: #3456F3;
+    padding: 5px 12px;
+    border-radius: 3px;
+}
+
+@media screen and (min-width: 768px) {
+    .login-menu__list {
+        column-gap: 30px;
+    }
+
+    .login-menu__link {
+        font-size: 12px;
+    }
+
+    .login-menu__link_signin {
+        padding: 8px 20px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .login-menu__list {
+        column-gap: 50px;
+    }
+}
