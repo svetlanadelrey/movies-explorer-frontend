@@ -4,7 +4,7 @@
 
 .auth__form {
     width: 100%;
-    height: 100%;
+    min-height: 470px;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     margin: 0;
-    padding-bottom: 15px;
+    padding-bottom: 25px;
 }
 
 .auth__label {
@@ -33,7 +33,7 @@
     font-size: 14px;
     font-weight: 400;
     line-height: normal;
-    min-height: 37px;
+    min-height: 30px;
     border: none;
     outline: none;
     border-bottom: 1px solid #E8E8E8;
@@ -49,6 +49,11 @@
     font-size: 12px;
     font-weight: 500;
     line-height: normal;
+    margin-top: auto;
+}
+
+.auth__button:hover {
+    opacity: .8;
 }
 
 .auth__title {
@@ -59,5 +64,22 @@
     text-align: center;
     margin: 0;
     padding-top: 50px;
-    padding-bottom: 56px;
+    padding-bottom: 75px;
+}
+
+@media screen and (min-width: 768px) {
+    .auth__title {
+        text-align: left;
+        padding-top: 35px;
+        padding-bottom: 37px;
+    }
+
+    .auth__form {
+        min-height: 385px;
+    }
+
+    .auth__button {
+        font-size: 14px;
+        font-weight: 500;
+    }
 }

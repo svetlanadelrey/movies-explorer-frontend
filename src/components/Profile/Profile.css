@@ -40,7 +40,7 @@
 }
 
 .profile__form {
-    padding-top: 80px;
+    padding-top: 65px;
 }
 
 .profile__input {
@@ -92,14 +92,25 @@
         padding-bottom: 269px;
     }
 
+    .profile__form {
+        padding-top: 75px;
+    }
+
     .profile__control-button {
         font-size: 13px;
     }
 }
 
 @media screen and (min-width: 1280px) {
+    .profile {
+        padding-top: 74px;
+    }
     .profile__container {
+        padding: 0;
+        height: 482px;
+    }
 
-
+    .profile__form {
+        padding-top: 105px;
     }
 }

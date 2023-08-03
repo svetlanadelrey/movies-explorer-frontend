@@ -1,9 +1,9 @@
 .promo {
     background-color: #DDDEE3;
     min-height: 570px;
-    display: flex;
-    align-items: center;
+    box-sizing: border-box;
     position: relative;
+    padding: 207px 10px 0;
 }
 
 .promo__title {
@@ -13,13 +13,14 @@
     font-weight: 400;
     line-height: 39px;
     text-align: center;
+    letter-spacing: -1.24px;
 }
 
 .promo__background {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 142px;
+    left: 36px;
+    right: 36px;
     width: 248px;
     height: 248px;
     background-image: url('../../images/promo_pic.svg');
@@ -30,15 +31,20 @@
 @media screen and (min-width: 768px) {
     .promo {
         min-height: 784px;
+        padding: 326px 19px 0;
     }
 
     .promo__title {
         font-size: 50px;
         line-height: 58px;
         max-width: 730px;
+        letter-spacing: -2px;
     }
     
     .promo__background {
+        top: 224px;
+        left: 224px;
+        right: 224px;
         width: 320px;
         height: 320px;
     }
@@ -47,9 +53,13 @@
 @media screen and (min-width: 1280px) {
     .promo {
         min-height: 524px;
+        padding: 184px 275px 0;
     }
     
     .promo__background {
+        top: 82px;
+        margin-left: auto;
+        margin-right: auto;
         width: 320px;
         height: 320px;
     }

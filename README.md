@@ -1,10 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+[Сылка на макет] (https://www.figma.com/file/NhAO1Cvh2cYN1Av0EVQ7iK/Diploma-(Copy)?type=design&node-id=891-3857&mode=dev)
 
 ### `npm start`
 

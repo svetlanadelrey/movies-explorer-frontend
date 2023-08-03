@@ -7,14 +7,14 @@ import { useLocation } from 'react-router-dom';
 function Header({ loggedIn }) {
     const location = useLocation();
     const isMain = location.pathname === "/";
-    const isSignUp = location.pathname === "/signup";
-    const isSignIn = location.pathname === "/signin";
+    const isMovies = location.pathname === "/movies";
+    const isProfile = location.pathname === "/profile";
 
     return (
         <header className={`header ${!isMain ? 'header_movie' : 'header_main'}`}>
             <div className="header__container">
                 <Logo />
-                {!loggedIn ? <MainMenu /> : <LoginMenu /> }
+                {isMovies || isProfile ? <MainMenu /> : <LoginMenu /> }
             </div>
         </header>
     );

@@ -24,6 +24,10 @@
     border-bottom: 1px solid;
 }
 
+.nav-tab__link:hover {
+    opacity: .7;
+}
+
 @media screen and (min-width: 768px) {
     .nav-tab__link {
         font-size: 13px;

@@ -29,7 +29,7 @@
     font-size: 12px;
     font-weight: 400;
     line-height: normal;
-    margin-top: auto;
+    margin-top: 284px;
 }
 
 @media screen and (min-width: 768px) {
@@ -47,11 +47,12 @@
 
     .not-found__link {
         font-size: 14px;
+        margin-top: 184px;
     }
 }
 
 @media screen and (min-width: 1280px) {
     .not-found-page {
-        padding: 246px 440px 60px;
+        padding: 246px 440px 0;
     }
 }

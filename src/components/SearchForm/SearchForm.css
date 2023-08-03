@@ -59,9 +59,21 @@
     cursor: pointer;
 }
 
+.search-movie__button:hover {
+    opacity: .8;
+}
+
 @media screen and (min-width: 768px) {
     .search-movie {
         padding: 80px 30px 51px;
+    }
+
+    .search-movie__form {
+        row-gap: 31px;
+    }
+
+    .search-movie__form::after {
+        bottom: -40px;
     }
 
     .search-movie__input {

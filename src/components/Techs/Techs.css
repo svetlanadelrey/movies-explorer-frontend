@@ -14,6 +14,7 @@
     font-weight: 400;
     line-height: normal;
     margin: 0;
+    letter-spacing: -0.72px;
 }
 
 .techs__title::after {
@@ -32,6 +33,7 @@
     font-weight: 400;
     line-height: normal;
     text-align: center;
+    letter-spacing: -1.2px;
 }
 
 .techs__text {
@@ -42,6 +44,7 @@
     font-weight: 400;
     line-height: 16px;
     text-align: center;
+    letter-spacing: -0.44px;
 }
 
 .techs__list {
@@ -77,6 +80,7 @@
 
     .techs__title {
         font-size: 22px;
+        letter-spacing: -0.88px;
     }
 
     .techs__title::after {
@@ -87,6 +91,7 @@
         padding-top: 80px;
         font-size: 50px;
         line-height: 58px;
+        letter-spacing: -2px;
     }
 
     .techs__text {
@@ -95,6 +100,7 @@
         padding-top: 22px;
         font-size: 12px;
         line-height: 18px;
+        letter-spacing: -0.48px;
     }
 
     .techs__list {
@@ -109,11 +115,16 @@
         padding: 100px 70px;
     }
 
+    .techs__subtitle {
+        padding-top: 90px;
+    }
+
     .techs__text {
         max-width: 460px;
         padding-top: 26px;
         font-size: 14px;
         line-height: 20px;
+        letter-spacing: -0.56px;
     }
 
     .techs__list {

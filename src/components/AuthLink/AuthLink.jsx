@@ -10,11 +10,11 @@ function AuthLink({title}) {
         <div className="auth__link-container">
             <p className="auth__link-title">{title}</p>
             {isSignUp ? (
-                        <Link to="/signup" className="auth__link">
+                        <Link to="/signin" className="auth__link">
                             Войти
                         </Link>
             ) : (
-                <Link to="/signin" className="auth__link">
+                <Link to="/signup" className="auth__link">
                     Регистрация
                 </Link>
                 )

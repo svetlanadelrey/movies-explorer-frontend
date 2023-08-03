@@ -22,3 +22,17 @@
     font-weight: 400;
     line-height: normal;
 }
+
+.auth__link:hover {
+    opacity: .7;
+}
+
+@media screen and (min-width: 768px) {
+    .auth__link {
+        font-size: 14px;
+    }
+
+    .auth__link-title {
+        font-size: 14px;
+    }
+}

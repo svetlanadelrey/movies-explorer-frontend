@@ -12,6 +12,8 @@ function MoviesCard() {
                 <p className="movies-card__duration">1ч 17м</p>
             </div>
             <button type="button" className="movies-card__save-button">Сохранить</button>
+            <button type="button" className="movies-card__saved-button" aria-label="Добавлено"></button>
+            <button type="button" className="movies-card__delete-button" aria-label="Удалить"></button>
         </li>
     );
 }

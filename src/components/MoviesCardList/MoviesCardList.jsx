@@ -11,6 +11,12 @@ function MoviesCardList() {
                 <MoviesCard />
                 <MoviesCard />
                 <MoviesCard />
+                <MoviesCard />
+                <MoviesCard />
+                <MoviesCard />
+                <MoviesCard />
+                <MoviesCard />
+                <MoviesCard />
             </ul>
             <button type="button" className="movies-card-list__button">Ещё</button>
         </section>

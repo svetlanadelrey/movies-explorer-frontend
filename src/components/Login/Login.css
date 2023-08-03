@@ -1,6 +1,10 @@
+body {
+    background: #FAFAFA;
+}
+
 .login {
     box-sizing: border-box;
-    min-height: 780px;
+    min-height: fit-content;
     padding: 56px 30px 30px;
     display: flex;
     justify-content: center;

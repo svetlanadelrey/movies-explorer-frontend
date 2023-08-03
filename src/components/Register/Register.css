@@ -1,3 +1,7 @@
+body {
+    background: #FAFAFA;
+}
+
 .register {
     box-sizing: border-box;
     min-height: 780px;

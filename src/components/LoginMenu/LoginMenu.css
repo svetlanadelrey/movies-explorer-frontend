@@ -16,11 +16,19 @@
     line-height: 16px;
 }
 
+.login-menu__link:hover {
+    opacity: .7;
+}
+
 .login-menu__link_signin {
     color: #FFFFFF;
     background-color: #3456F3;
     padding: 5px 12px;
     border-radius: 3px;
+}
+
+.login-menu__link_signin:hover {
+    opacity: .8;
 }
 
 @media screen and (min-width: 768px) {

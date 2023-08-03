@@ -3,3 +3,7 @@
     height: 38px;
     cursor: pointer;
 }
+
+.logo__link:hover {
+    opacity: .8;
+}

@@ -14,7 +14,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 39px;
+    row-gap: 25px;
     column-gap: 30px;
     max-width: 1140px;
 }
@@ -40,7 +40,7 @@
 
     .movies-card-list__list {
         column-gap: 30px;
-        row-gap: 47px;
+        row-gap: 40px;
     }
 }
 
