@@ -44,9 +44,3 @@
         padding: 8px 20px;
     }
 }
-
-@media screen and (min-width: 1280px) {
-    .login-menu__list {
-        column-gap: 50px;
-    }
-}

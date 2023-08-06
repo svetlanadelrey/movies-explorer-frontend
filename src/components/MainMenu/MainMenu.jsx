@@ -14,12 +14,12 @@ function MainMenu({onMainMenu, onClose}) {
 
     return (
         <>
-        <div className="main-menu__burger-icon" onClick={handleMainMenuClick}></div>
+        <button className="main-menu__burger-icon" type="button" onClick={handleMainMenuClick} aria-label="Открыть меню"/>
         <div className={`main-menu ${isMainMenuOpen ? 'main-menu_opened' : ''}`}>
             <nav className="main-menu__nav">
                 <ul className="main-menu__list">
                     <li className="main-menu__item">
-                        <NavLink exact to="/" className={({isActive}) => `main-menu__link ${isActive ? "main-menu__link_active" : ""}`}>Главная</NavLink>
+                        <NavLink to="/" className={({isActive}) => `main-menu__link ${isActive ? "main-menu__link_active" : ""}`}>Главная</NavLink>
                     </li>
                     <li className="main-menu__item">
                         <NavLink to="/movies" className={({isActive}) => `main-menu__link ${isActive ? "main-menu__link_active" : ""}`}>Фильмы</NavLink>

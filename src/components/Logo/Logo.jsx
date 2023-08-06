@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 
 function Logo() {
     return (
-        <Link className="logo__link" to="/">
-            <img
-                className="logo"
-                src={logo}
-                alt="Логотип"
-            />
-        </Link>
+        <div className="logo">
+            <Link className="logo__link" to="/">
+                <img
+                    className="logo__image"
+                    src={logo}
+                    alt="Логотип"
+                />
+            </Link>
+        </div>
     );
 }
 

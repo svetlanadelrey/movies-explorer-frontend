@@ -5,18 +5,20 @@ import './Register.css';
 
 function Register() {
     return (
-        <section className="register">
-            <div className="register__container">
-                <Logo />
-                <AuthForm
-                    title={"Добро пожаловать!"}
-                    buttonText={"Зарегистрироваться"}
-                />
-                <AuthLink 
-                    title={"Уже зарегистрированы?"}
-                />
-            </div>
-        </section>
+        <main>
+            <section className="register">
+                <div className="register__container">
+                    <Logo />
+                    <AuthForm
+                        title={"Добро пожаловать!"}
+                        buttonText={"Зарегистрироваться"}
+                    />
+                    <AuthLink 
+                        title={"Уже зарегистрированы?"}
+                    />
+                </div>
+            </section>
+        </main>
     );
 }
 

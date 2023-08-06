@@ -40,12 +40,26 @@
 
     .movies-card-list__list {
         column-gap: 30px;
-        row-gap: 40px;
+        row-gap: 45px;
+    }
+
+    .movies-card-list__button {
+        margin-top: 60px;
+        min-width: 320px;
     }
 }
 
 @media screen and (min-width: 1280px) {
     .movies-card-list {
         padding: 70px 70px 80px;
+    }
+
+    .movies-card-list__list {
+        row-gap: 60px;
+    }
+
+    .movies-card-list__button {
+        margin-top: 72px;
+        min-width: 320px;
     }
 }

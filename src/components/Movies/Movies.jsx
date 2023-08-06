@@ -10,8 +10,10 @@ function Movies() {
     return (
         <>
         <Header />
-        <SearchForm />
-        <MoviesCardList />
+        <main>
+            <SearchForm />
+            <MoviesCardList />
+        </main>
         <Footer />
         </>
     );

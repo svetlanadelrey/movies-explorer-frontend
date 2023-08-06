@@ -169,4 +169,12 @@
     .about-project__timetable {
         padding-top: 110px;
     }
+
+    .about-project__column_back {
+        flex-basis: 21%;
+    }
+    
+    .about-project__column_front {
+        flex-basis: 85%;
+    }
 }

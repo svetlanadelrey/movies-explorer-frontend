@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function LoginMenu() {
     return (
-        <nav className="login-menu__nav">
+        <nav className="login-menu">
             <ul className="login-menu__list">
                 <li className="login-menu__item">
                     <NavLink to="/signup" className="login-menu__link">Регистрация</NavLink>

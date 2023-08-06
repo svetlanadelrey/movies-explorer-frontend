@@ -22,6 +22,7 @@
     font-size: 12px;
     font-weight: 500;
     line-height: normal;
+    margin: 0;
 }
 
 .movies-card__duration {
@@ -82,8 +83,27 @@
 }
 
 @media screen and (min-width: 768px) {
+    .movies-card__item {
+        row-gap: 20px;
+    }
+
     .movies-card__image {
         max-width: 339px;
+    }
+    
+    .movies-card__container {
+        flex-wrap: wrap;
+        align-content: center;
+    }
+
+    .movies-card__duration {
+        margin: 0;
+        width: 52px;
+        height: 18px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .movies-card__title {
@@ -94,5 +114,17 @@
 @media screen and (min-width: 1280px) {
     .movies-card__image {
         max-width: 360px;
+    }
+
+    .movies-card__item {
+        row-gap: 8px;
+    }
+
+    .movies-card__container {
+        padding: 0 15px;
+    }
+
+    .movies-card__duration {
+        padding: 0;
     }
 }

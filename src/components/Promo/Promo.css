@@ -19,8 +19,9 @@
 .promo__background {
     position: absolute;
     top: 142px;
-    left: 36px;
-    right: 36px;
+    left: 0;
+    right: 0;
+    margin: auto;
     width: 248px;
     height: 248px;
     background-image: url('../../images/promo_pic.svg');
@@ -43,8 +44,6 @@
     
     .promo__background {
         top: 224px;
-        left: 224px;
-        right: 224px;
         width: 320px;
         height: 320px;
     }
@@ -58,9 +57,5 @@
     
     .promo__background {
         top: 82px;
-        margin-left: auto;
-        margin-right: auto;
-        width: 320px;
-        height: 320px;
     }
 }

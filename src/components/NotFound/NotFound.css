@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
     padding: 329px 10px 30px;
 }
 
-.not-found__title {
+.not-found-page__title {
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 80px;
     font-weight: 400;
@@ -14,15 +13,16 @@
     margin: 0;
 }
 
-.not-found__text {
+.not-found-page__text {
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 12px;
     font-weight: 400;
     line-height: normal;
     margin: 0;
+    padding-top: 10px;
 }
 
-.not-found__link {
+.not-found-page__link {
     color: #3456F3;
     text-decoration: none;
     font-family: 'Inter', 'Arial', sans-serif;
@@ -37,15 +37,16 @@
         padding: 408px 184px 222px;
     }
 
-    .not-found__title {
+    .not-found-page__title {
         font-size: 140px;
     }
 
-    .not-found__text {
+    .not-found-page__text {
         font-size: 16px;
+        padding-top: 2px;
     }
 
-    .not-found__link {
+    .not-found-page__link {
         font-size: 14px;
         margin-top: 184px;
     }

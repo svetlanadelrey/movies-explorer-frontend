@@ -5,18 +5,20 @@ import './Login.css';
 
 function Login() {
     return (
-        <section className="login">
-            <div className="login__container">
-                <Logo />
-                <AuthForm
-                    title={"Рады видеть!"}
-                    buttonText={"Войти"}
-                />
-                <AuthLink 
-                    title={"Ещё не зарегистрированы?"}
-                />
-            </div>
-        </section>
+        <main>
+            <section className="login">
+                <div className="login__container">
+                    <Logo />
+                    <AuthForm
+                        title={"Рады видеть!"}
+                        buttonText={"Войти"}
+                    />
+                    <AuthLink 
+                        title={"Ещё не зарегистрированы?"}
+                    />
+                </div>
+            </section>
+        </main>
     );
 }
 

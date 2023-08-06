@@ -1,5 +1,5 @@
 import './AboutMe.css';
-import avatar from '../../images/avatar.jpg';
+import avatar from '../../images/photo.jpg';
 
 function AboutMe() {
     return (
@@ -12,7 +12,7 @@ function AboutMe() {
                         <h3 className="about-me__name">Светлана</h3>
                         <p className="about-me__job">Фронтенд-разработчик, 34 года</p>
                         <p className="about-me__text">
-                            Я живу в Екатеринбурге. Люблю ничего не делать. Особенно люблю отдыхать несколько раз.
+                            Я живу в Екатеринбурге. Люблю музыку, книги, тишину, природу, кошек, путешествия, огурцы. 
                         </p>
                     
                         <a className="about-me__link" href="https://github.com/svetlanadelrey" rel="noreferrer" target="_blank">

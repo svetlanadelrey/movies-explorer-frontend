@@ -65,7 +65,12 @@
 
 .main-menu__burger-icon {
     display: block;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
     background-image: url('../../images/burger.svg');
+    background-size: cover;
     width: 40px;
     height: 43px;
     cursor: pointer;
@@ -109,7 +114,7 @@
     
 }
 
-@media screen and (min-width: 780px) {
+@media screen and (min-width: 768px) {
     .main-menu__burger-icon {
         width: 44px;
         height: 44px;

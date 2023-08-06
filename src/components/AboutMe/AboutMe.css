@@ -28,12 +28,11 @@
 .about-me__container {
     display: flex;
     flex-direction: column;
-
 }
 
 .about-me__image {
-    max-width: 292px;
-    min-height: 352px;
+    min-width: 292px;
+    height: 352px;
     object-fit: cover;
     object-position: 50% 50%;
     border-radius: 10px;
@@ -66,6 +65,7 @@
 }
 
 .about-me__text {
+    min-height: 115px;
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 11px;
     font-weight: 400;
@@ -113,8 +113,8 @@
     .about-me__image {
         order: 2;
         margin-top: 0;
-        max-width: 255px;
-        min-height: 307px;
+        min-width: 255px;
+        height: 307px;
     }
 
     .about-me__description {
@@ -143,7 +143,7 @@
 
 @media screen and (min-width: 1280px) {
     .about-me {
-        padding: 110px 70px 101px;
+        padding: 113px 70px 101px;
     }
 
     .about-me__container {
@@ -152,7 +152,7 @@
 
     .about-me__image {
         margin: 0;
-        max-width: 270px;
+        min-width: 270px;
         min-height: 327px;
     }
 
@@ -170,6 +170,7 @@
 
     .about-me__text {
         max-width: 600px;
+        padding-top: 27px;
         font-size: 14px;
         line-height: 22px;
     }
