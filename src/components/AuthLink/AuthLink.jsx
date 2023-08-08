@@ -7,14 +7,14 @@ function AuthLink({title}) {
     const isSignUp = location.pathname === "/signup";
     
     return (
-        <div className="auth__link-container">
-            <p className="auth__link-title">{title}</p>
+        <div className="auth-links">
+            <p className="auth-links__title">{title}</p>
             {isSignUp ? (
-                        <Link to="/signin" className="auth__link">
+                        <Link to="/signin" className="auth-links__link">
                             Войти
                         </Link>
             ) : (
-                <Link to="/signup" className="auth__link">
+                <Link to="/signup" className="auth-links__link">
                     Регистрация
                 </Link>
                 )

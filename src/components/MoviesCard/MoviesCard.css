@@ -1,4 +1,4 @@
-.movies-card__item {
+.movies-card {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -83,7 +83,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .movies-card__item {
+    .movies-card {
         row-gap: 20px;
     }
 
@@ -116,7 +116,7 @@
         max-width: 360px;
     }
 
-    .movies-card__item {
+    .movies-card {
         row-gap: 8px;
     }
 

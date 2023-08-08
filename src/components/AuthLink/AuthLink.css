@@ -1,11 +1,11 @@
-.auth__link-container {
+.auth-links {
     display: flex;
     gap: 7px;
     margin-top: 14px;
     align-self: center;
 }
 
-.auth__link-title {
+.auth-links__title {
     color: #A0A0A0;
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 12px;
@@ -14,7 +14,7 @@
     margin: 0;
 }
 
-.auth__link {
+.auth-links__link {
     text-decoration: none;
     color: #3456F3;
     font-family: 'Inter', 'Arial', sans-serif;
@@ -23,16 +23,16 @@
     line-height: normal;
 }
 
-.auth__link:hover {
+.auth-links__link:hover {
     opacity: .7;
 }
 
 @media screen and (min-width: 768px) {
-    .auth__link {
+    .auth-links__link {
         font-size: 14px;
     }
 
-    .auth__link-title {
+    .auth-links__title {
         font-size: 14px;
     }
 }
