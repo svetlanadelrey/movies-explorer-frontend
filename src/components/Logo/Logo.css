@@ -1,0 +1,9 @@
+.logo__image {
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.logo__link:hover {
+    opacity: .8;
+}
