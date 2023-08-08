@@ -1,7 +1,3 @@
-.main-menu__link_active {
-    border-bottom: 2px solid #000000;
-}
-
 .main-menu__container {
     visibility: hidden;
     opacity: 0;
@@ -63,6 +59,10 @@
     opacity: .7;
 }
 
+.main-menu__link_active {
+    border-bottom: 2px solid #000000;
+}
+
 .main-menu__burger-icon {
     display: block;
     border: none;
@@ -121,7 +121,12 @@
     }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 769px) {
+    .main-menu {
+        width: 100%;
+        padding-left: 44px;
+    }
+    
     .main-menu__link {
         font-size: 13px;
         font-weight: 400;
@@ -138,7 +143,6 @@
         opacity: 1;
         display: flex;
         position: relative;
-        margin-left: 44px;
     }
 
     .main-menu__burger-icon {
@@ -148,6 +152,7 @@
     .main-menu__nav {
         max-width: 100%;
         flex-direction: row;
+        justify-content: space-between;
         height: 100%;
         padding: 0;
     }
