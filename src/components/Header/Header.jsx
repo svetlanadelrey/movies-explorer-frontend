@@ -8,13 +8,14 @@ function Header({ loggedIn }) {
     const location = useLocation();
     const isMain = location.pathname === "/";
     const isMovies = location.pathname === "/movies";
+    const isSavedMovies = location.pathname === "/saved-movies";
     const isProfile = location.pathname === "/profile";
 
     return (
         <header className={`header ${!isMain ? 'header_movie' : 'header_main'}`}>
             <div className="header__container">
                 <Logo />
-                {isMovies || isProfile ? <MainMenu /> : <LoginMenu /> }
+                {isMovies || isProfile || isSavedMovies ? <MainMenu /> : <LoginMenu /> }
             </div>
         </header>
     );

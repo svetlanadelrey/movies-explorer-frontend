@@ -43,7 +43,11 @@
     padding-left: 16px;
     color: #A0A0A0;
 }
-
+.search-movie__input[disabled] {
+    border: none;
+    background-color: transparent;
+    color: #EE3465;
+  }
 .search-movie__button {
     border: none;
     width: 70px;
@@ -61,6 +65,10 @@
 
 .search-movie__button:hover {
     opacity: .8;
+}
+
+.search-movie__input_error {
+    color: #EE3465;
 }
 
 @media screen and (min-width: 768px) {
