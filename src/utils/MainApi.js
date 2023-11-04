@@ -92,9 +92,9 @@ class MainApi {
         duration: movie.duration,
         year: movie.year,
         description: movie.description,
-        image: `${MOVIES_API_URL}${movie.image.url}`,
+        image: `https://api.nomoreparties.co/${movie.image.url}`,
         trailer: movie.trailerLink,
-        thumbnail: `${MOVIES_API_URL}${movie.image.url}`,
+        thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
         movieId: movie.id,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN
@@ -109,6 +109,14 @@ class MainApi {
     })
     .then(this._checkResponse);
   }
+
+  changeLikeCardStatus(movieId, isLiked) {
+    return fetch(`${this._baseUrl}/movies/${movieId}`, {
+        method: `${isLiked ? 'PUT' : 'DELETE'}`,
+        headers: this._headers,           
+    })
+    .then(this._checkResponse);
+}
 
   _checkResponse(res) {
     if (res.ok) {

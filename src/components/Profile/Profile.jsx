@@ -31,13 +31,13 @@ function Profile({loggedIn, onUpdate, handleSignOut}) {
     const validateName = (value) => {
         const nameRegex = /^[a-zA-Zа-яА-ЯЁё\s-]*$/;
         const isValidName = nameRegex.test(value);
-        setNameError(isValidName ? "" : "Please enter a valid name.");
+        setNameError(isValidName ? "" : "Пожалуйста, укажите правильное имя.");
     };
     
     const validateEmail = (value) => {
         const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
         const isValidEmail = emailRegex.test(value);
-        setEmailError(isValidEmail ? "" : "Please enter a valid email.");
+        setEmailError(isValidEmail ? "" : "Пожалуйста, укажите правильный email.");
     };
 
     const isInvalidForm = nameError || emailError;
@@ -80,9 +80,10 @@ function Profile({loggedIn, onUpdate, handleSignOut}) {
                                 onChange={handleNameChange}
                                 value={name || ""}
                                 required
-                            />                         
+                            />
+                            {nameError && <span className="profile__error">{nameError}</span>}
                         </div>
-                        {nameError && <div className="profile__error">{nameError}</div>}
+                        
                         <div className="profile__input-container">
                             <label htmlFor="profile-email" className="profile__label">E-mail</label>
                             <input 
@@ -95,8 +96,9 @@ function Profile({loggedIn, onUpdate, handleSignOut}) {
                                 value={email || ""}
                                 required
                             />
+                            {emailError && <span className="profile__error">{emailError}</span>}
                         </div>
-                        {emailError && <div className="profile__error">{emailError}</div>}
+                        
                         <div className="profile__control">
                             <button 
                                 type="submit" 
@@ -119,9 +121,9 @@ function Profile({loggedIn, onUpdate, handleSignOut}) {
                     </form>
                     {successMessage && (
                     <div className="profile__success">
-                        <div className="profile__success-message">
+                        <p className="profile__success-message">
                             Данные успешно сохранены!
-                        </div>
+                        </p>
                     </div>
                     )}
                 </div>

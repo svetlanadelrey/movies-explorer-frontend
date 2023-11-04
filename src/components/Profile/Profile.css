@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     border-bottom: 1px solid #E8E8E8;
+    position: relative;
 }
 
 .profile__input-container:last-child {
@@ -95,10 +96,11 @@
 .profile__error {
     color: #EE3465;
     font-family: 'Inter', 'Arial', sans-serif;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 400;
     line-height: normal;
-    margin-top: 6px;
+    position: absolute;
+    bottom: -13px;
 }
 
 .profile__success {
@@ -106,6 +108,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: auto;
+    padding: 20px 15px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.profile__success-message {
+    color: #000;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
 }
 
 @media screen and (min-width: 768px) {

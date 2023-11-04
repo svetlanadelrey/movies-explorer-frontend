@@ -10,8 +10,8 @@ function MoviesCardList({
   isLoading,
   isNothingFound,
   onSaveMovie,
-  onDeleteMovie,
-  saved}) {
+  onDeleteMovie
+  }) {
 
   const getCardCount = () => {
       const windowWidth = window.innerWidth;
@@ -24,12 +24,10 @@ function MoviesCardList({
           return 5;
       }
 
-      return 0;
+      return 8;
     };
-    const [shownMovies, setShownMovies] = useState(
-      parseInt(localStorage.getItem("shownMovies")) || getCardCount()
-    );
-    const [additionalMovies, setAdditionalMovies] = useState(0);
+    const [shownMovies, setShownMovies] = useState(getCardCount());
+    const {pathname} = useLocation();
 
     useEffect(() => {
       localStorage.setItem("shownMovies", shownMovies.toString());
@@ -38,28 +36,23 @@ function MoviesCardList({
     const showMoreMovies = () => {
       const innerWidth = window.innerWidth;
       let moviesToShow = 0;
-      let additionalMoviesToShow = 0;
   
       if (innerWidth >= 1280) {
         moviesToShow = 3;
-        additionalMoviesToShow = 3;
       } else if (innerWidth >= 768 && innerWidth < 1280) {
         moviesToShow = 2;
-        additionalMoviesToShow = 2;
       } else if (innerWidth >= 320 && innerWidth <= 480) {
         moviesToShow = 5;
-        additionalMoviesToShow = 2;
       }
   
-      setShownMovies((prevCount) => prevCount + moviesToShow);
-      setAdditionalMovies(additionalMoviesToShow);
+      setShownMovies(prevCount => prevCount + moviesToShow);
     };
 
     useEffect(() => {
       const handleResize = () => {
         setShownMovies(getCardCount());
       };
-  
+      handleResize();
       window.addEventListener('resize', handleResize);
   
       return () => {
@@ -67,54 +60,42 @@ function MoviesCardList({
       };
     }, []);
 
-    /*const getSavedMovieCard = (savedMovies, movie) => {
-      return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
-    };*/
-
-    const {pathname} = useLocation();
-
     return (
       <section className="movies-card-list">
       {isLoading && <Preloader/>}
       {isNothingFound && !isLoading && (
         <span className='service-message'>Ничего не найдено</span>
       )}
-      {pathname === '/movies' ? (
-        <>
-          <ul className="movies-card-list__list">
-            {movies.slice(0, shownMovies).map((movie) => (
+          <article className="movies-card-list__list">
+            {pathname === '/movies' ? movies.slice(0, shownMovies).map((movie) => (
               <MoviesCard
                 movie={movie}
                 key={movie.id || movie._id}
                 onSaveMovie={onSaveMovie}
                 onDeleteMovie={onDeleteMovie}
                 savedMovies={savedMovies}
-                
+                nameRU = {movie.nameRU}
+                duration = {movie.duration}
+                image = {`https://api.nomoreparties.co/${movie.image.url}`}
               />
-            ))}
-          </ul>
-          {movies.length > shownMovies && (
+            )) : 
+            movies.map((movie) => (
+              <MoviesCard
+                movie={movie}
+                key={movie._id}
+                onDeleteMovie={onDeleteMovie}
+                savedMovies={savedMovies}
+                nameRU = {movie.nameRU}
+                duration = {movie.duration}
+                image = {movie.image}
+              />
+            ))
+            }
+          </article>
+      {pathname === '/movies' && movies.length > shownMovies && (
         <button type="button" className="movies-card-list__button" onClick={showMoreMovies}>
           Ещё
         </button>
-      )}
-        </>
-      ) :
-  
-       (
-        <>
-          <ul className="movies-card-list__list">
-            {savedMovies.map((movie) => (
-              <MoviesCard
-                movie={movie.movie}
-                key={movie.movie._id}
-                onDeleteMovie={onDeleteMovie}
-                savedMovies={savedMovies}
-                
-              />
-            ))}
-          </ul>
-        </>
       )}
     </section>
       );

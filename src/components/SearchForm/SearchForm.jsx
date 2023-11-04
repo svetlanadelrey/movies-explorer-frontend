@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({handleSearchByKeyword, isShortMovies, handleShortMoviesToggle}) {
+function SearchForm({handleSearchMovie, isShortMovies, handleShortMoviesToggle}) {
     const [keyword, setKeyword] = useState("");
     const [error, setError] = useState("");
+    const {pathname} = useLocation();
     
     const handleInputChange = (e) => {
         setKeyword(e.target.value);
@@ -17,9 +19,16 @@ function SearchForm({handleSearchByKeyword, isShortMovies, handleShortMoviesTogg
           setError("Нужно ввести ключевое слово");
         } else {
           setError("");
-          handleSearchByKeyword(keyword, isShortMovies);
+          handleSearchMovie(keyword, isShortMovies);
         }
-      };
+    };
+
+    useEffect(() => {
+        if (pathname === '/movies' && localStorage.getItem('movieSearch')) {
+          const localSearch = localStorage.getItem('movieSearch');
+          setKeyword(localSearch);
+        }
+      }, [pathname]);
 
     return (
         <section className="search-movie">

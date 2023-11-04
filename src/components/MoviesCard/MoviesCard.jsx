@@ -3,34 +3,39 @@ import { useLocation } from 'react-router-dom';
 import { calculateMovieDuration } from '../../utils/utils';
 import './MoviesCard.css';
 
-function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie, saved}) {
-    const [isSaved, setIsSaved] = useState(false);
-    const {pathname} = useLocation();
-
-    const handleSaveClick = () => {
-      if (isSaved) {
-        onDeleteMovie(movie);
-        setIsSaved(false);
-        localStorage.setItem(`movie_${movie.id}`, false);
-        } else {
-          onSaveMovie(movie);
-          setIsSaved(true);
-          localStorage.setItem(`movie_${movie.id}`, true);
-        }
-      };
+function MoviesCard({movie, image, onSaveMovie, onDeleteMovie}) {
+  //const isMovieSaved = (movie, savedMovies) =>
+    //savedMovies.some((i) => i._id === movie._id || i.movieId === movie.movieId);
+  //const [isSaved, setIsSaved] = useState(false);
+  const {pathname} = useLocation();
+  const savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
+  const isSaved = savedMovies ? savedMovies.some((i) => i.movieId === movie.id) : false;
+  const movieSaved = savedMovies ? savedMovies.find((i) => i.movieId === movie.id) : null;
+  const savedButtonClassName = (`movies-card__button ${isSaved ? 'movies-card__button_saved' : ''}`)
+  /*const handleSaveClick = () => {
+    if (isSaved) {
+      onDeleteMovie(movie);
+      setIsSaved(false);
+      } else {
+        onSaveMovie(movie);
+        setIsSaved(true);
+      }
+    };
+  
+    const handleDeleteClick = () => {
+      onDeleteMovie(movie);
+      setIsSaved(false);
+    };
+    console.log('movie.image:', movie.image);
+    console.log('movie.image.url:', movie.image.url);*/
     
-      const deleteMovie = () => {
-        onDeleteMovie(movie._id);
-        setIsSaved(false);
-      };
-
     return (
-        <li className="movies-card" 
+        <li className="movies-card"
         >
             <a className="movies-card__link" href={movie.trailerLink} target="_blank" rel="noopener noreferrer">
                 <img 
                     className="movies-card__image" 
-                    src={(typeof movie.image === 'string') ? movie.image : `https://api.nomoreparties.co/${movie.image.url}`}
+                    src={image}
                     alt={movie.nameRU}
                 />
             </a>
@@ -38,24 +43,23 @@ function MoviesCard({movie, savedMovies, onSaveMovie, onDeleteMovie, saved}) {
                 <h2 className="movies-card__title">{movie.nameRU}</h2>
                 <p className="movies-card__duration">{calculateMovieDuration(movie.duration)}</p>
             </div>
-            {pathname === '/movies' && (
-              <button
-                type="button"
-                className={isSaved ? 'movies-card__button_saved' : 'movies-card__button'} 
-                onClick={handleSaveClick}
-                aria-label="Сохранить"
-                >{isSaved ? '': 'Сохранить'}
-              </button>
-              )
+            {pathname === '/saved-movies' ?
+                <button
+                  type="button"
+                            className='movies-card__delete-button'
+                            aria-label="Удалить"
+                            onClick={() => onDeleteMovie(movie._id)}
+                          ></button>
+                          :
+                          <button
+                          type="button"
+                          className={savedButtonClassName} 
+                          onClick={() => onSaveMovie(movie, isSaved, movieSaved)}
+                          aria-label="Сохранить"
+                          >{isSaved ? '': 'Сохранить'}
+                        </button>
             }
-            {pathname === '/saved-movies' && (
-              <button
-                type="button"
-                className='movies-card__delete-button'
-                aria-label="Удалить"
-                onClick={deleteMovie}
-              ></button>
-            )}
+
         </li>
     );
 }

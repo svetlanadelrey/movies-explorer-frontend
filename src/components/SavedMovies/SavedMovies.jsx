@@ -4,44 +4,70 @@ import { Header } from '../Header/Header';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { MoviesCardList } from '../MoviesCardList/MoviesCardList';
 import { Footer } from '../Footer/Footer';
-import { getSavedMoviesFromLocalStorage } from '../../utils/utils';
+import { filterMovies, filterShortMovies, getSavedMoviesFromLocalStorage } from '../../utils/utils';
 
 
-function SavedMovies({savedMovies, loggedIn, onDeleteMovie, handleSearchByKeyword, handleShortMoviesToggle}) {
+function SavedMovies({movies, savedMovies, loggedIn, onDeleteMovie, isMovieSaved, handleSearchByKeyword, handleShortMoviesToggle}) {
     const [isShortMovies, setIsShortMovies] = useState(false);
-    const [movies, setMovies] = useState([]);
+
+    const [searchedMovies, setSearchedMovies] = useState(savedMovies); 
+  const [isNotFound, setIsNotFound] = useState(false); 
+  const [searchRequest, setSearchRequest] = useState('');
+  const [isSearchPerformed, setIsSearchPerformed] = useState(false);
+
+  const handleSearchMovies = (request) => {
+    setSearchRequest(request);
+  }
+
+  const handleShortMovies = () => {
+    setIsShortMovies(!isShortMovies);
+  }
+
+  useEffect(() => {
+      const savedSearchedMovies = localStorage.getItem('searchedMovies');
+      const savedIsShortMovies = localStorage.getItem('isShortMovies');
     
-
-    useEffect(() => {
-        const savedMovies = getSavedMoviesFromLocalStorage(); 
-        setMovies(savedMovies);
-      }, [])
+      if (savedSearchedMovies) {
+        setSearchedMovies(JSON.parse(savedSearchedMovies));
+        setIsSearchPerformed(true);
+      }
     
-    const handleSearch = (keyword, savedMovies) => {
-        handleSearchByKeyword(keyword, savedMovies);
-    }
+      if (savedIsShortMovies !== null) {
+        setIsShortMovies(savedIsShortMovies === 'true');
+      }
+    }, [setSearchedMovies, setIsSearchPerformed, setIsShortMovies]);
 
-    const handleShortMovies = () => {
-        setIsShortMovies(prevIsShortMovies => !prevIsShortMovies);
-    }
+  useEffect(() => {
+    const moviesList = filterMovies(savedMovies, searchRequest);
+    setSearchedMovies(isShortMovies ? 
+      filterShortMovies(moviesList) 
+    : 
+      moviesList);
+  }, [savedMovies, isShortMovies, searchRequest]);
 
-    const handleDeleteMovie = (movie) => {
-        onDeleteMovie(movie)
-    }
-
+  useEffect(() => {
+    (searchedMovies.length === 0) ? 
+      setIsNotFound(true) 
+    : 
+      setIsNotFound(false);
+  }, [searchedMovies]);
+    
     return (
         <>
         <Header loggedIn={loggedIn} />
         <main>
             <SearchForm
-                handleSearchByKeyword={handleSearch}
+                handleSearchByKeyword={handleSearchMovies}
                 isShortMovies={isShortMovies}
                 handleShortMoviesToggle={handleShortMovies}
             />
             <MoviesCardList 
                 movies={savedMovies}
-                onDeleteMovie={handleDeleteMovie}
+
+                onDeleteMovie={onDeleteMovie}
                 savedMovies={savedMovies}
+                isNotFound={isNotFound}
+                isSearchPerformed={isSearchPerformed}
             />           
         </main>
         <Footer />

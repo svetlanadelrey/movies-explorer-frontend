@@ -1,19 +1,18 @@
 export const filterMovies = (movies, keyword) => {
-    const filteredMovies = movies.filter((movie) => {
-      const lowercaseKeyword = keyword.toLowerCase();
-  
-      const lowercaseTitleRU = movie.nameRU.toLowerCase();
-      const lowercaseTitleEN = movie.nameEN.toLowerCase();
-  
-      return (
-        lowercaseTitleRU.includes(lowercaseKeyword) ||
-        lowercaseTitleEN.includes(lowercaseKeyword)
-      );
-    });
-  
-    return filteredMovies;
-  };
+  const filteredMovies = movies.filter((movie) => {
+    const lowercaseKeyword = keyword.toLowerCase();
 
+    const lowercaseTitleRU = String(movie.nameRU).toLowerCase();
+    const lowercaseTitleEN = String(movie.nameEN).toLowerCase();
+
+    return (
+      lowercaseTitleRU.includes(lowercaseKeyword) ||
+      lowercaseTitleEN.includes(lowercaseKeyword)
+    );
+  });
+
+  return filteredMovies;
+};
 export const filterShortMovies = (movies) => {
   const MAX_DURATION = 40;
   return movies.filter((movie) => movie.duration <= MAX_DURATION);
