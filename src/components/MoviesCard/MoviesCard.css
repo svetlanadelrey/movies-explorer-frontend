@@ -91,7 +91,7 @@
     cursor: pointer;
 }
 
-.movies-card:hover .movies-card__button{
+.movies-card__button{
     opacity: 1;
 }
 
@@ -142,4 +142,5 @@
     .movies-card__duration {
         padding: 0;
     }
+
 }

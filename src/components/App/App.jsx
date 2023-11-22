@@ -11,17 +11,25 @@ import { NotFound } from '../NotFound/NotFound';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
-import { getSavedMoviesFromLocalStorage, saveSavedMoviesToLocalStorage } from '../../utils/utils';
+import { filterMovies, filterShortMovies, getSavedMoviesFromLocalStorage, saveSavedMoviesToLocalStorage } from '../../utils/utils';
 import { moviesApi } from '../../utils/MoviesApi';
-import { MOVIES_API_URL } from '../../utils/constants';
+import { ERROR_MESSAGE, MOVIES_API_URL } from '../../utils/constants';
 
 function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [keyword, setKeyword] = useState('');
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [movieCount, setMovieCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [isShortMovies, setIsShortMovies] = useState(false);
+  const [shortMovieCheckbox, setShortMovieCheckbox] = useState(false);
+  const [keywordSavedMovies, setKeywordSavedMovies] = useState('');
+  const [shortSavedMovieCheckbox, setShortSavedMovieCheckbox] = useState(false);
+  const [searchedSavedMovies, setSearchedSavedMovies] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if(loggedIn) {
@@ -29,34 +37,19 @@ function App() {
         mainApi.getMovies(),
         mainApi.getCurrentUser(),
       ])
-        .then(([movies, user]) => {
-          setMovies(movies);
+        .then(([savedMovies, user]) => {
           setCurrentUser(user);
+          setSavedMovies(savedMovies.reverse());
+          
+          setMovies(JSON.parse(localStorage.getItem('allMovies')) ?? movies);
+          setSearchedMovies(JSON.parse(localStorage.getItem('movies')) ?? searchedMovies);
+          setKeyword(localStorage.getItem('search-input') ?? keyword);
+          setShortMovieCheckbox(localStorage.getItem('checkbox') === 'true');
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(`Ошибка: ${err}`));
     }
   }, [loggedIn]);
 
-  /*useEffect(() => {
-      loadSavedMovies();
-
-  }, []);
-
-  const loadSavedMovies = () => {
-    mainApi
-      .getSavedMovies()
-      .then((movies) => {
-        setSavedMovies(movies);
-        setMovieCount(movies.length); // Обновление значения movieCount
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
-  };*/
-  useEffect(() => {
-    const storedSavedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-    if (storedSavedMovies) {
-      setSavedMovies(storedSavedMovies);
-    }
-  }, []);
   /*useEffect(() => {
     const token = localStorage.getItem('jwt');
     if(token) {
@@ -79,7 +72,7 @@ function App() {
         .checkToken(token)
         .then((res) => {
           if (res) {
-            localStorage.removeItem('allMovies');
+            
             setLoggedIn(true);
           }
           navigate('/');
@@ -105,16 +98,19 @@ function App() {
     .then((data) => {
         setCurrentUser(currentUser);       
         setLoggedIn(true);
+        mainApi.setToken(data.token);     
+        localStorage.setItem("jwt", data.token);
         navigate("/movies");
-      localStorage.setItem("jwt", data.token);
     })
     .catch(err => console.log(err))
   }
 
   const handleSignOut = () => {
     localStorage.clear();
+    setCurrentUser({});
+    setMovies([]);
+    setSavedMovies([]);
     setLoggedIn(false);
-    navigate("/", {replace: true});
   }
 
   const handleUpdateUser = ({name, email}) => {
@@ -124,80 +120,97 @@ function App() {
     })
     .catch(err => console.log(err));
   }
-  /*const moviesArray = (movies) => {
-    return movies.map((movie) => {
-      return {
-        country: movie.country,
-        director: movie.director,
-        duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
-        image: `${MOVIES_API_URL}${movie.image.url}`,
-        trailer: movie.trailerLink,
-        thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
-        movieId: movie.id,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
-      }
-    })
-  }
+
   const getMovies = () => {
-    return moviesApi
+    moviesApi
     .getMovies()
-    .then(newMovies => {
-      const newMoviesArray = moviesArray(newMovies)
-      setMovies(newMoviesArray);
-      localStorage.setItem('movies', JSON.stringify(newMoviesArray));
-    })
-    .catch((err) => console.log(`Ошибка: ${err}`));
-  }*/
-
-  //const isMovieSaved = (movie) => savedMovies.some(i => (i._id === movie._id) || (i.movieId === movie.movieId));
-
-  /*const handleSaveMovie = (movie) => {
-    mainApi.addMovie(movie)
-    .then((addedMovie) => {
-      setSavedMovies([addedMovie, ...savedMovies]);
+    .then(movies => {
+      const newMovies = movies.map((movie) => ({
+          country: movie.country,
+          director: movie.director,
+          duration: movie.duration,
+          year: movie.year,
+          description: movie.description,
+          image: `${MOVIES_API_URL}${movie.image.url}`,
+          trailer: movie.trailerLink,
+          thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
+          movieId: movie.id,
+          nameRU: movie.nameRU,
+          nameEN: movie.nameEN,
+        }));
+      setMovies(newMovies);
+      saveMovies(newMovies);
+      localStorage.setItem('allMovies', JSON.stringify(newMovies));
     })
     .catch((err) => console.log(`Ошибка: ${err}`));
   }
+
+  const searchMovies = () => {
+    if (!keyword) {
+      setErrorMessage(ERROR_MESSAGE.KEYWORD)
+      setSearchedMovies([]);
+      return;
+    }
+    if (movies.length > 0) {
+      saveMovies(movies);
+    } else {
+      getMovies();
+    }
+  };
+
+  const resetSearchSavedMovies = () => {
+    setKeywordSavedMovies('')
+    setShortSavedMovieCheckbox(false)
+  }
+
+  const saveMovies = (movies) => {
+    const moviesList = filterMovies(movies, keyword, shortMovieCheckbox);
+    localStorage.setItem('movies', JSON.stringify(moviesList));
+    localStorage.setItem('search-input', keyword);
+    localStorage.setItem('checkbox', shortMovieCheckbox);
+    setSearchedMovies(moviesList);
+  };
+
+  useEffect(() => {
+    if (movies.length === 0) return;
+    if (!keyword) return setErrorMessage(ERROR_MESSAGE.KEYWORD);
+    if (searchedMovies.length === 0) {
+      setErrorMessage(ERROR_MESSAGE.NOT_FOUND);
+    } else {
+      setErrorMessage('');
+    }
+  }, [searchedMovies]);
+
+  const searchSavedMovies = () => {
+    const searchedMovies = filterMovies(savedMovies, keywordSavedMovies, shortSavedMovieCheckbox);
+    setSearchedSavedMovies(searchedMovies);
+    
+  };
+  useEffect(searchSavedMovies, [shortSavedMovieCheckbox, savedMovies, keywordSavedMovies]);
+
+  const filterMovies = (movies, keyword, checkbox) => {
+    return movies.filter((movie) =>
+      checkbox
+        ? movie.duration <= 40 &&
+          (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
+        : (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
+    );
+  };
+
+  const handleSaveMovie = (movie) => {
+    mainApi.addMovie(movie)
+    .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
+    .catch((err) => console.log(`Ошибка: ${err}`));
+  };
+
+  const isMovieSaved = (movie) => savedMovies.some((i) => i.movieId === movie.movieId);
   
   const handleDeleteMovie = (movie) => {
-    const movieId = movie._id || savedMovies.find(m => m.movieId === movie.movieId)._id;
-    console.log(movieId);
+    const movieId = movie._id ? movie._id : savedMovies.find((i) => i.movieId === movie.movieId)._id;;
     mainApi
       .removeMovie(movieId)
       .then(() => {
         setSavedMovies((movies) => movies.filter((i) => i._id !== movieId));
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
-  };*/
-  
-
-  const handleSetSavedMovies = (newSavedMovies) => {
-    setSavedMovies(newSavedMovies);
-  };
-
-  const handleSaveMovie = (movie, isSaved, movieSaved) => {
-    if (isSaved) {
-      handleDeleteMovie(movieSaved._id);
-    } else {
-      mainApi.addMovie(movie)
-      .then((res) => {
-        setSavedMovies([...savedMovies, res]);//добавить к сущ.массиву
-        localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, res]));
-      })
-      .catch((err) => console.log(`Ошибка: ${err}`));
-    }
-  };
-  
-  const handleDeleteMovie = (movieId) => {
-    mainApi
-      .removeMovie(movieId)
-      .then(() => {
-        const updatedSavedMovies = savedMovies.filter((movie) => movie._id !== movieId);
-        setSavedMovies(updatedSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
       })
       .catch((err) => console.log(`Ошибка: ${err}`));
   };
@@ -211,13 +224,19 @@ function App() {
             path="/movies"
             element={
               <ProtectedRoute
-                movies={movies}
-                loggedIn={loggedIn}
                 component={Movies}
+                movies={searchedMovies}
+                loggedIn={loggedIn}               
+                searchMovies={searchMovies}
+                setKeyword={setKeyword}
+                keyword={keyword}
                 onSaveMovie={handleSaveMovie}
                 onDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-
+                isMovieSaved={isMovieSaved}
+                errorMessage={errorMessage}
+                setSearchedMovies={setSearchedMovies}
+                onCheckbox={() => setShortMovieCheckbox(!shortMovieCheckbox)}
+                shortMovieCheckbox={shortMovieCheckbox}
               />
             } 
           />
@@ -225,12 +244,20 @@ function App() {
             path="/saved-movies"
             element={
               <ProtectedRoute
-                movies={movies}
-                loggedIn={loggedIn}
                 component={SavedMovies}
+                movies={searchedSavedMovies}
+                loggedIn={loggedIn}
                 onDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-                setSavedMovies={handleSetSavedMovies}
+                isMovieSaved={isMovieSaved}
+                setSearchedMovies={setSearchedMovies}
+                searchMovies={searchSavedMovies}
+                setKeyword={setKeywordSavedMovies}
+                errorMessage={errorMessage}
+                keyword={keywordSavedMovies}
+                onCheckbox={() =>
+                  setShortSavedMovieCheckbox(!shortSavedMovieCheckbox)
+                }
+                shortMovieCheckbox={shortSavedMovieCheckbox}
               />
             }
           />
@@ -251,6 +278,7 @@ function App() {
             path="/signup"
             element={
               <Register
+                loggedIn={loggedIn}
                 onRegister={handleRegister}
               />
             }
@@ -259,6 +287,7 @@ function App() {
             path="/signin"
             element={
               <Login
+                loggedIn={loggedIn}
                 onLogin={handleLogin}
               />
             }

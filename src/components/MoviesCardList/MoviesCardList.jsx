@@ -1,102 +1,61 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { MoviesCard } from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
-import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList({
   movies,
-  savedMovies,
-  isLoading,
-  isNothingFound,
   onSaveMovie,
-  onDeleteMovie
+  onDeleteMovie,
+  isMovieSaved,
   }) {
-
-  const getCardCount = () => {
-      const windowWidth = window.innerWidth;
-
-      if (windowWidth >= 1280) {
-          return 12;
-      } else if (windowWidth >= 768) {
-          return 8;
-      } else if (windowWidth >= 320) {
-          return 5;
-      }
-
-      return 8;
-    };
-    const [shownMovies, setShownMovies] = useState(getCardCount());
-    const {pathname} = useLocation();
-
-    useEffect(() => {
-      localStorage.setItem("shownMovies", shownMovies.toString());
-    }, [shownMovies]);
+    const [countMovies, setCountMovies] = useState(12);
+    const [width, setWidth] = useState(window.innerWidth);
   
     const showMoreMovies = () => {
-      const innerWidth = window.innerWidth;
-      let moviesToShow = 0;
-  
-      if (innerWidth >= 1280) {
-        moviesToShow = 3;
-      } else if (innerWidth >= 768 && innerWidth < 1280) {
-        moviesToShow = 2;
-      } else if (innerWidth >= 320 && innerWidth <= 480) {
-        moviesToShow = 5;
+      if (width > 1280) {
+        setCountMovies(countMovies + 3);
+      } else {
+        setCountMovies(countMovies + 2);
       }
-  
-      setShownMovies(prevCount => prevCount + moviesToShow);
+
     };
 
     useEffect(() => {
       const handleResize = () => {
-        setShownMovies(getCardCount());
+        setTimeout(() => setWidth(window.innerWidth), 1500);
+        window.addEventListener('resize', handleResize);
+        if (width >= 1280) {
+          setCountMovies(3);
+        } else if (width >= 768 && width < 1280) {
+          setCountMovies(2);
+        } else if (width >= 320 && width <= 480) {
+          setCountMovies(5);
+        }
       };
-      handleResize();
-      window.addEventListener('resize', handleResize);
   
       return () => {
         window.removeEventListener('resize', handleResize);
       };
-    }, []);
+    }, [width]);
 
-    return (
-      <section className="movies-card-list">
-      {isLoading && <Preloader/>}
-      {isNothingFound && !isLoading && (
-        <span className='service-message'>Ничего не найдено</span>
-      )}
-          <article className="movies-card-list__list">
-            {pathname === '/movies' ? movies.slice(0, shownMovies).map((movie) => (
+return (
+      <section className="movies-card-list">  
+          <ul className="movies-card-list__list">
+            {movies.slice(0, countMovies).map((movie) => (
               <MoviesCard
                 movie={movie}
-                key={movie.id || movie._id}
+                key={movie.movieId}
                 onSaveMovie={onSaveMovie}
                 onDeleteMovie={onDeleteMovie}
-                savedMovies={savedMovies}
-                nameRU = {movie.nameRU}
-                duration = {movie.duration}
-                image = {`https://api.nomoreparties.co/${movie.image.url}`}
+                isMovieSaved={isMovieSaved}
               />
-            )) : 
-            movies.map((movie) => (
-              <MoviesCard
-                movie={movie}
-                key={movie._id}
-                onDeleteMovie={onDeleteMovie}
-                savedMovies={savedMovies}
-                nameRU = {movie.nameRU}
-                duration = {movie.duration}
-                image = {movie.image}
-              />
-            ))
-            }
-          </article>
-      {pathname === '/movies' && movies.length > shownMovies && (
+            ))}
+          </ul>
+          {movies.length > countMovies && (
         <button type="button" className="movies-card-list__button" onClick={showMoreMovies}>
           Ещё
         </button>
-      )}
+      )}    
     </section>
       );
 }

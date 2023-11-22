@@ -1,10 +1,10 @@
 export const filterMovies = (movies, keyword) => {
   const filteredMovies = movies.filter((movie) => {
-    const lowercaseKeyword = keyword.toLowerCase();
+    const lowercaseKeyword = keyword.toLowerCase().trim();
 
     const lowercaseTitleRU = String(movie.nameRU).toLowerCase();
     const lowercaseTitleEN = String(movie.nameEN).toLowerCase();
-
+    
     return (
       lowercaseTitleRU.includes(lowercaseKeyword) ||
       lowercaseTitleEN.includes(lowercaseKeyword)
@@ -25,15 +25,4 @@ export const calculateMovieDuration = value => {
   if (hours === 0) calculatedDuration = `${minutes}м`;
   if (minutes === 0) calculatedDuration = `${hours}ч`;
   return calculatedDuration;
-};
-
-// Функция для получения массива savedMovies из localStorage
-export const getSavedMoviesFromLocalStorage = () => {
-  const savedMovies = JSON.parse(localStorage.getItem('savedMovies')) || [];
-  return savedMovies;
-};
-        
-// Функция для сохранения массива savedMovies в localStorage
-export const saveSavedMoviesToLocalStorage = (savedMovies) => {
-  localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
 };

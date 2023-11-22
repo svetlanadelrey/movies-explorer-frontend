@@ -1,6 +1,6 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox({isShortMovies, handleShortMoviesToggle}) {
+function FilterCheckbox({shortMovieCheckbox, onCheckbox}) {
 
     return (
         <div className="filter-checkbox">
@@ -8,8 +8,8 @@ function FilterCheckbox({isShortMovies, handleShortMoviesToggle}) {
                     type="checkbox"
                     className="filter-checkbox__input"
                     id="filter-checkbox"
-                    checked={isShortMovies}
-                    onChange={handleShortMoviesToggle}
+                    checked={shortMovieCheckbox}
+                    onChange={onCheckbox}
                 />
             <label htmlFor="filter-checkbox" className="filter-checkbox__label">Короткометражки</label>
         </div>

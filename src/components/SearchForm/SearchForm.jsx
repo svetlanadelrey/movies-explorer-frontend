@@ -1,57 +1,45 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState} from 'react';
 import './SearchForm.css';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({handleSearchMovie, isShortMovies, handleShortMoviesToggle}) {
-    const [keyword, setKeyword] = useState("");
-    const [error, setError] = useState("");
-    const {pathname} = useLocation();
+function SearchForm({searchMovies, setKeyword, keyword, onCheckbox, shortMovieCheckbox}) {
+    
     
     const handleInputChange = (e) => {
         setKeyword(e.target.value);
-        setError("");
+        
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (keyword.trim().length === 0) {
-          setError("Нужно ввести ключевое слово");
-        } else {
-          setError("");
-          handleSearchMovie(keyword, isShortMovies);
-        }
-    };
 
-    useEffect(() => {
-        if (pathname === '/movies' && localStorage.getItem('movieSearch')) {
-          const localSearch = localStorage.getItem('movieSearch');
-          setKeyword(localSearch);
-        }
-      }, [pathname]);
+          searchMovies();
+        
+    };
 
     return (
         <section className="search-movie">
             <form 
                 className="search-movie__form" 
-                onSubmit={handleSubmit} 
+                name="search"
                 noValidate
             >
                 <div className="search-movie__input-container">
                     <input
-                        className={`search-movie__input ${error ? 'search-movie__input_error' : ''}`}
+                        className='search-movie__input'
                         type="text"
                         autoComplete="off"
-                        placeholder={error || "Фильм"}
-                        value={keyword || ""}
+                        placeholder={"Фильм"}
+                        value={keyword}
+                        id="search"
                         onChange={handleInputChange}
                         required
                     />
-                    <button className="search-movie__button" type="submit">Найти</button>
+                    <button className="search-movie__button" type="submit" onClick={handleSubmit}>Найти</button>
                 </div>
                 <FilterCheckbox 
-                    checked={isShortMovies}
-                    handleShortMoviesToggle={handleShortMoviesToggle}
+                    onCheckbox={onCheckbox}
+                    shortMovieCheckbox={shortMovieCheckbox}
                 />
             </form>
         </section>

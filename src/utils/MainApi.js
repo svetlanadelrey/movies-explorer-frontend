@@ -22,7 +22,7 @@ class MainApi {
       .then(this._checkResponse)
   };
 
-  getCurrentUser() {
+  getCurrentUser(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
         headers: {
           'Content-Type': 'application/json',
@@ -76,29 +76,11 @@ class MainApi {
     .then(this._checkResponse);
   };
 
-  getSavedMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
-      headers: this._headers,
-    }).then(this._checkResponse);
-  }
-
   addMovie(movie) {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({
-        country: movie.country,
-        director: movie.director,
-        duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
-        image: `https://api.nomoreparties.co/${movie.image.url}`,
-        trailer: movie.trailerLink,
-        thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
-        movieId: movie.id,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN
-      })
+      body: JSON.stringify(movie)
     }).then(this._checkResponse);
   }
 
@@ -109,14 +91,6 @@ class MainApi {
     })
     .then(this._checkResponse);
   }
-
-  changeLikeCardStatus(movieId, isLiked) {
-    return fetch(`${this._baseUrl}/movies/${movieId}`, {
-        method: `${isLiked ? 'PUT' : 'DELETE'}`,
-        headers: this._headers,           
-    })
-    .then(this._checkResponse);
-}
 
   _checkResponse(res) {
     if (res.ok) {
