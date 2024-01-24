@@ -62,7 +62,7 @@
     min-width: 72px;
     min-height: 21px;
     cursor: pointer;
-    opacity: 0;
+
 }
 
 .movies-card__button_saved {
@@ -91,15 +91,16 @@
     cursor: pointer;
 }
 
-.movies-card__button{
-    opacity: 1;
-}
 
 @media screen and (min-width: 768px) {
     .movies-card {
         row-gap: 20px;
         max-width: 339px;
     }
+
+    /*.movies-card__button {
+        opacity: 1;
+    }*/
 
     .movies-card__image {
         height: 190px;
@@ -142,5 +143,13 @@
     .movies-card__duration {
         padding: 0;
     }
+
+    /*.movies-card__button {
+        opacity: 0;
+    }
+    
+    .movies-card:hover .movies-card__button {
+        opacity: 1;
+    }*/
 
 }

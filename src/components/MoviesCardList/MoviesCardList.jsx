@@ -7,6 +7,7 @@ function MoviesCardList({
   onSaveMovie,
   onDeleteMovie,
   isMovieSaved,
+  errorMessage,
   }) {
     const [countMovies, setCountMovies] = useState(12);
     const [width, setWidth] = useState(window.innerWidth);
@@ -39,7 +40,8 @@ function MoviesCardList({
     }, [width]);
 
 return (
-      <section className="movies-card-list">  
+      <section className="movies-card-list"> 
+          <span className="movies-card-list__error">{errorMessage}</span>
           <ul className="movies-card-list__list">
             {movies.slice(0, countMovies).map((movie) => (
               <MoviesCard

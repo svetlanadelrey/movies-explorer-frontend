@@ -38,8 +38,8 @@ function App() {
         mainApi.getCurrentUser(),
       ])
         .then(([savedMovies, user]) => {
-          setCurrentUser(user);
           setSavedMovies(savedMovies.reverse());
+          setCurrentUser(user);
           
           setMovies(JSON.parse(localStorage.getItem('allMovies')) ?? movies);
           setSearchedMovies(JSON.parse(localStorage.getItem('movies')) ?? searchedMovies);
@@ -159,8 +159,8 @@ function App() {
   };
 
   const resetSearchSavedMovies = () => {
-    setKeywordSavedMovies('')
-    setShortSavedMovieCheckbox(false)
+    setKeywordSavedMovies('');
+    setShortSavedMovieCheckbox(false);
   }
 
   const saveMovies = (movies) => {
@@ -199,7 +199,9 @@ function App() {
 
   const handleSaveMovie = (movie) => {
     mainApi.addMovie(movie)
-    .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
+    .then((newMovie) => {
+      setSavedMovies([...savedMovies, newMovie.movie]);
+    })
     .catch((err) => console.log(`Ошибка: ${err}`));
   };
 
