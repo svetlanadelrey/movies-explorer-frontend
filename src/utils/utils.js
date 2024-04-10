@@ -1,22 +1,13 @@
-export const filterMovies = (movies, keyword) => {
-  const filteredMovies = movies.filter((movie) => {
-    const lowercaseKeyword = keyword.toLowerCase().trim();
+import { MAX_DURATION } from "./constants";
 
-    const lowercaseTitleRU = String(movie.nameRU).toLowerCase();
-    const lowercaseTitleEN = String(movie.nameEN).toLowerCase();
-    
-    return (
-      lowercaseTitleRU.includes(lowercaseKeyword) ||
-      lowercaseTitleEN.includes(lowercaseKeyword)
-    );
-  });
-
-  return filteredMovies;
+export const filterMovies = (movies, keyword, checkbox) => {
+  return movies.filter((movie) =>
+    checkbox
+      ? movie.duration <= MAX_DURATION &&
+        (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
+      : (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
+      );
 };
-export const filterShortMovies = (movies) => {
-  const MAX_DURATION = 40;
-  return movies.filter((movie) => movie.duration <= MAX_DURATION);
-}
 
 export const calculateMovieDuration = value => {
   const hours = Math.floor(value / 60);

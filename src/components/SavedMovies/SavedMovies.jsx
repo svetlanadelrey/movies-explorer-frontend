@@ -8,8 +8,8 @@ function SavedMovies({
   movies,
   searchMovies,
   setSearchedMovies,
-  setKeyword,
-  keyword,
+  setKeywordMovies,
+  keywordMovies,
   onCheckbox,
   shortMovieCheckbox,
   onDeleteMovie,
@@ -23,8 +23,8 @@ function SavedMovies({
             <SearchForm
                 searchMovies={searchMovies}
                 setSearchedMovies={setSearchedMovies}
-                setKeyword={setKeyword}
-                keyword={keyword}
+                setKeywordMovies={setKeywordMovies}
+                keywordMovies={keywordMovies}
                 onCheckbox={onCheckbox}
                 shortMovieCheckbox={shortMovieCheckbox}
             />

@@ -11,25 +11,27 @@ import { NotFound } from '../NotFound/NotFound';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import mainApi from '../../utils/MainApi';
-import { filterMovies, filterShortMovies, getSavedMoviesFromLocalStorage, saveSavedMoviesToLocalStorage } from '../../utils/utils';
+import { filterMovies } from '../../utils/utils';
 import { moviesApi } from '../../utils/MoviesApi';
 import { ERROR_MESSAGE, MOVIES_API_URL } from '../../utils/constants';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [keyword, setKeyword] = useState('');
+  const [keywordMovies, setKeywordMovies] = useState('');
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [preloader, setPreloader] = useState(false);
   const [searchedMovies, setSearchedMovies] = useState([]);
-  const [isShortMovies, setIsShortMovies] = useState(false);
   const [shortMovieCheckbox, setShortMovieCheckbox] = useState(false);
   const [keywordSavedMovies, setKeywordSavedMovies] = useState('');
   const [shortSavedMovieCheckbox, setShortSavedMovieCheckbox] = useState(false);
   const [searchedSavedMovies, setSearchedSavedMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [firstSearch, setFirstSearch] = useState(true);
 
   useEffect(() => {
     if(loggedIn) {
@@ -43,31 +45,19 @@ function App() {
           
           setMovies(JSON.parse(localStorage.getItem('allMovies')) ?? movies);
           setSearchedMovies(JSON.parse(localStorage.getItem('movies')) ?? searchedMovies);
-          setKeyword(localStorage.getItem('search-input') ?? keyword);
+          setKeywordMovies(localStorage.getItem('search-input') ?? keywordMovies);
           setShortMovieCheckbox(localStorage.getItem('checkbox') === 'true');
         })
         .catch((err) => console.log(`Ошибка: ${err}`));
     }
   }, [loggedIn]);
 
-  /*useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if(token) {
-      mainApi.checkToken(token)
-      .then((res) => {
-        if (res) {
-          mainApi.setToken(token);
-          setLoggedIn(true);
-          navigate("/", { replace: true });
-        }
-      })
-      .catch(err => console.log(err))
-    }
-  }, [navigate]);*/
-
   useEffect(() => {
     const token = localStorage.getItem('jwt');
-    if (token) {
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
       mainApi
         .checkToken(token)
         .then((res) => {
@@ -79,8 +69,9 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
-        });
-    }
+        })
+        .finally(() => setIsLoading(false));
+    
   }, []);
   
   const handleRegister = ({name, email, password}) => {
@@ -109,6 +100,8 @@ function App() {
     localStorage.clear();
     setCurrentUser({});
     setMovies([]);
+    setSearchedMovies([]);
+    setKeywordMovies('');
     setSavedMovies([]);
     setLoggedIn(false);
   }
@@ -142,38 +135,41 @@ function App() {
       saveMovies(newMovies);
       localStorage.setItem('allMovies', JSON.stringify(newMovies));
     })
-    .catch((err) => console.log(`Ошибка: ${err}`));
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    })
+    .finally(() => {
+      setPreloader(false);
+    })
   }
 
   const searchMovies = () => {
-    if (!keyword) {
+    setFirstSearch(false);
+    if (!keywordMovies) {
       setErrorMessage(ERROR_MESSAGE.KEYWORD)
       setSearchedMovies([]);
       return;
     }
+    setPreloader(true);
     if (movies.length > 0) {
       saveMovies(movies);
+      setPreloader(false);
     } else {
       getMovies();
     }
   };
 
-  const resetSearchSavedMovies = () => {
-    setKeywordSavedMovies('');
-    setShortSavedMovieCheckbox(false);
-  }
-
   const saveMovies = (movies) => {
-    const moviesList = filterMovies(movies, keyword, shortMovieCheckbox);
+    const moviesList = filterMovies(movies, keywordMovies, shortMovieCheckbox);
     localStorage.setItem('movies', JSON.stringify(moviesList));
-    localStorage.setItem('search-input', keyword);
+    localStorage.setItem('search-input', keywordMovies);
     localStorage.setItem('checkbox', shortMovieCheckbox);
     setSearchedMovies(moviesList);
   };
 
   useEffect(() => {
     if (movies.length === 0) return;
-    if (!keyword) return setErrorMessage(ERROR_MESSAGE.KEYWORD);
+    if (!keywordMovies) return setErrorMessage(ERROR_MESSAGE.KEYWORD);
     if (searchedMovies.length === 0) {
       setErrorMessage(ERROR_MESSAGE.NOT_FOUND);
     } else {
@@ -186,16 +182,13 @@ function App() {
     setSearchedSavedMovies(searchedMovies);
     
   };
-  useEffect(searchSavedMovies, [shortSavedMovieCheckbox, savedMovies, keywordSavedMovies]);
 
-  const filterMovies = (movies, keyword, checkbox) => {
-    return movies.filter((movie) =>
-      checkbox
-        ? movie.duration <= 40 &&
-          (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
-        : (String(movie.nameRU).toLowerCase().includes(keyword.toLowerCase()) || String(movie.nameEN).toLowerCase().includes(keyword.toLowerCase()))
-    );
-  };
+  useEffect(searchSavedMovies, [shortSavedMovieCheckbox, savedMovies, keywordSavedMovies]);
+  
+  useEffect(() => {
+    if (firstSearch) return;
+    searchMovies();
+  }, [shortMovieCheckbox, savedMovies]);
 
   const handleSaveMovie = (movie) => {
     mainApi.addMovie(movie)
@@ -217,6 +210,8 @@ function App() {
       .catch((err) => console.log(`Ошибка: ${err}`));
   };
 
+  if (isLoading) return <Preloader />;
+
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
@@ -230,8 +225,8 @@ function App() {
                 movies={searchedMovies}
                 loggedIn={loggedIn}               
                 searchMovies={searchMovies}
-                setKeyword={setKeyword}
-                keyword={keyword}
+                setKeywordMovies={setKeywordMovies}
+                keywordMovies={keywordMovies}
                 onSaveMovie={handleSaveMovie}
                 onDeleteMovie={handleDeleteMovie}
                 isMovieSaved={isMovieSaved}
@@ -239,6 +234,7 @@ function App() {
                 setSearchedMovies={setSearchedMovies}
                 onCheckbox={() => setShortMovieCheckbox(!shortMovieCheckbox)}
                 shortMovieCheckbox={shortMovieCheckbox}
+                preloader={preloader}
               />
             } 
           />
@@ -253,13 +249,14 @@ function App() {
                 isMovieSaved={isMovieSaved}
                 setSearchedMovies={setSearchedMovies}
                 searchMovies={searchSavedMovies}
-                setKeyword={setKeywordSavedMovies}
+                setKeywordMovies={setKeywordSavedMovies}
                 errorMessage={errorMessage}
-                keyword={keywordSavedMovies}
+                keywordMovies={keywordSavedMovies}
                 onCheckbox={() =>
                   setShortSavedMovieCheckbox(!shortSavedMovieCheckbox)
                 }
                 shortMovieCheckbox={shortSavedMovieCheckbox}
+                preloader={preloader}
               />
             }
           />

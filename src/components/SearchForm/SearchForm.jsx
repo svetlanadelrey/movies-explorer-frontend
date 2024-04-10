@@ -2,11 +2,11 @@ import { useState} from 'react';
 import './SearchForm.css';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 
-function SearchForm({searchMovies, setKeyword, keyword, onCheckbox, shortMovieCheckbox}) {
+function SearchForm({searchMovies, setKeywordMovies, keywordMovies, onCheckbox, shortMovieCheckbox}) {
     
     
     const handleInputChange = (e) => {
-        setKeyword(e.target.value);
+        setKeywordMovies(e.target.value);
         
     };
 
@@ -30,7 +30,7 @@ function SearchForm({searchMovies, setKeyword, keyword, onCheckbox, shortMovieCh
                         type="text"
                         autoComplete="off"
                         placeholder={"Фильм"}
-                        value={keyword}
+                        value={keywordMovies}
                         id="search"
                         onChange={handleInputChange}
                         required

@@ -2,19 +2,21 @@ import { SearchForm } from '../SearchForm/SearchForm';
 import { MoviesCardList } from '../MoviesCardList/MoviesCardList';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
+import Preloader from '../Preloader/Preloader';
 
 function Movies({
   movies,
   searchMovies,
-  setKeyword,
+  setKeywordMovies,
   setSearchedMovies,
-  keyword,
+  keywordMovies,
+  onCheckbox,
+  shortMovieCheckbox,
   onSaveMovie,
   onDeleteMovie,
   isMovieSaved,
-  onCheckbox,
-  shortMovieCheckbox,
   errorMessage,
+  preloader,
 }) {
     return (
         <>
@@ -22,21 +24,22 @@ function Movies({
         <main>
             <SearchForm 
               searchMovies={searchMovies}
-              setKeyword={setKeyword}
+              setKeywordMovies={setKeywordMovies}
               setSearchedMovies={setSearchedMovies}
-              keyword={keyword}
+              keywordMovies={keywordMovies}
               onCheckbox={onCheckbox}
               shortMovieCheckbox={shortMovieCheckbox}
-            />        
-            
-              <MoviesCardList
-                movies={movies}
-                onSaveMovie={onSaveMovie}
-                onDeleteMovie={onDeleteMovie}
-                isMovieSaved={isMovieSaved}
-                errorMessage={errorMessage}
-              />
-            
+            />
+            {preloader ? 
+              (<Preloader />) :
+                (<MoviesCardList
+                  movies={movies}
+                  onSaveMovie={onSaveMovie}
+                  onDeleteMovie={onDeleteMovie}
+                  isMovieSaved={isMovieSaved}
+                  errorMessage={errorMessage}
+                />)
+            }                 
         </main>
         <Footer />
         </>

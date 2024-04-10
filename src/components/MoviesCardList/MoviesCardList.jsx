@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MoviesCard } from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
+import { MAX_NUMBER_OF_CARDS, SCREEN_WIDTH } from '../../utils/constants';
 
 function MoviesCardList({
   movies,
@@ -13,10 +14,10 @@ function MoviesCardList({
     const [width, setWidth] = useState(window.innerWidth);
   
     const showMoreMovies = () => {
-      if (width > 1280) {
-        setCountMovies(countMovies + 3);
+      if (width > SCREEN_WIDTH.DESKTOP_WIDTH) {
+        setCountMovies(countMovies + MAX_NUMBER_OF_CARDS.DESKTOP_NUMBER);
       } else {
-        setCountMovies(countMovies + 2);
+        setCountMovies(countMovies + MAX_NUMBER_OF_CARDS.TABLET_NUMBER);
       }
 
     };
@@ -25,12 +26,12 @@ function MoviesCardList({
       const handleResize = () => {
         setTimeout(() => setWidth(window.innerWidth), 1500);
         window.addEventListener('resize', handleResize);
-        if (width >= 1280) {
-          setCountMovies(3);
-        } else if (width >= 768 && width < 1280) {
-          setCountMovies(2);
-        } else if (width >= 320 && width <= 480) {
-          setCountMovies(5);
+        if (width >= SCREEN_WIDTH.DESKTOP_WIDTH) {
+          setCountMovies(MAX_NUMBER_OF_CARDS.DESKTOP_NUMBER);
+        } else if (width >= SCREEN_WIDTH.TABLET_WIDTH && width < SCREEN_WIDTH.DESKTOP_WIDTH) {
+          setCountMovies(MAX_NUMBER_OF_CARDS.TABLET_NUMBER);
+        } else if (width >= SCREEN_WIDTH.MOBILE_WIDTH && width <= SCREEN_WIDTH.VERTICAL_WIDTH) {
+          setCountMovies(MAX_NUMBER_OF_CARDS.VERTICAL_SCREEN_NUMBER);
         }
       };
   

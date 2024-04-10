@@ -2,6 +2,7 @@
     background: #FAFAFA;
     padding: 40px 10px 80px;
     position: relative;
+
 }
 
 .movies-card-list__list {
@@ -77,6 +78,7 @@
     .movies-card-list__list {
         row-gap: 60px;
         justify-content: flex-start;
+        width: 100%;
     }
 
     .movies-card-list__button {
