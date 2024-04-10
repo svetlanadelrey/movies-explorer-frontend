@@ -1,5 +1,5 @@
-import React from 'react'
-import './Preloader.css'
+import React from 'react';
+import './Preloader.css';
 
 const Preloader = () => {
     return (
@@ -11,4 +11,4 @@ const Preloader = () => {
     )
 };
 
-export default Preloader
+export default Preloader;

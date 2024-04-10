@@ -78,6 +78,11 @@
     opacity: .8;
 }
 
+.auth__button_disabled {
+    background: #F8F8F8;
+    color: #C2C2C2;
+}
+
 .auth__title {
     font-family: 'Inter', 'Arial', sans-serif;
     font-size: 24px;
@@ -87,6 +92,14 @@
     margin: 0;
     padding-top: 46px;
     padding-bottom: 77px;
+}
+
+.auth__button_disabled {
+    cursor: not-allowed;
+}
+
+.auth__button_disabled:hover {
+    opacity: 1;
 }
 
 @media screen and (min-width: 768px) {
